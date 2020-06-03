@@ -27,7 +27,7 @@ $terms = get_terms( array(
     'order' => 'DESC',
     'orderby' => 'menu_order'
   );
-  $loop = new WP_Query($args);
+  $loop = new WP_Query( $args );
   ?>
 
   <?php if( $loop->have_posts() ): ?>
