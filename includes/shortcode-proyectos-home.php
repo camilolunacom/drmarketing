@@ -16,16 +16,16 @@ $counter = 1;
   <?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
     <div class="proyecto proyecto--home proyecto--<?php $counter; ?>">
-      <a href="<?php get_the_permalink(); ?>">
+      <a href="<?php the_permalink(); ?>">
         <div class="proyecto__img">
-          <?php get_the_post_thumbnail( null, 'project_thumb' ); ?>
+          <?php the_post_thumbnail( null, 'project_thumb' ); ?>
         </div>
         <div class="proyecto__info">
           <h3 class="proyecto__titulo">
-            <?php get_the_title(); ?>
+            <?php the_title(); ?>
           </h3>
           <span class="proyecto__descripcion">
-            <?php get_field( 'descripcion', false ); ?>
+            <?php the_field( 'descripcion', false ); ?>
           </span>
         </div>
       </a>
