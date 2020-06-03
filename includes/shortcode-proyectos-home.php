@@ -15,7 +15,7 @@ $counter = 1;
 
   <?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
-    <div class="proyecto proyecto--home proyecto--<?php $counter; ?>">
+    <div class="proyecto proyecto--home proyecto--<?php echo $counter; ?>">
       <a href="<?php the_permalink(); ?>">
         <div class="proyecto__img">
           <?php the_post_thumbnail( null, 'project_thumb' ); ?>
