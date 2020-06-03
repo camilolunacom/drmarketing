@@ -27,179 +27,49 @@ add_filter( 'et_project_posttype_args', 'mytheme_et_project_posttype_args', 10, 
 
 // Loop de proyectos para home 
 function proyectos_para_home() {
-	$args = array(
-		'post_type' => 'proyecto',
-		'posts_per_page'=> 10,
-		'order' => 'DESC',
-		'orderby' => 'menu_order'
-	);
-	$loop = new WP_Query( $args );
-	$html = '<div class="proyectos proyectos--home">';
-	$counter = 1;
-
-	if ( $loop->have_posts() ) :
-		while ( $loop->have_posts() ) : $loop->the_post();
-		$html .= '<div class="proyecto proyecto--home proyecto--' . $counter . '"><a href="' . get_the_permalink() . '"><div class="proyecto__img">' . get_the_post_thumbnail(null, 'project_thumb' ) . '</div><div class="proyecto__info"><h3 class="proyecto__titulo">' . get_the_title() . '</h3><span class="proyecto__descripcion">' . get_field( 'descripcion', false) . '</span></div></a></div>';
-		$counter += 1;
-		endwhile;
-		$html .= '</div>';
-		wp_reset_postdata();
-		wp_reset_query();
-	else:
-		$html = '<div>No se encontraron proyectos.</div>';
-	endif;
-	return $html;
+	ob_start();
+	locate_template( 'includes/shortcode-proyectos-home.php', true );
+  return ob_get_clean();
 }
 add_shortcode( 'proyectos_home', 'proyectos_para_home' );
 
 // Loop de taxonomía 'tipos de clientes' para portafolio
 function tipos_de_clientes() {
-	$terms = get_terms( array(
-		'taxonomy' => 'tipo',
-		'hide_empty' => false,
-		'orderby' => 'count',
-		'order' => 'DSC',
-		) );
-		
-	$html = '<div class="proyectos proyectos--tipo">';
-
-	foreach( $terms as $term ) :
-		$args = array(
-			'post_type' => 'proyecto',
-			'posts_per_page' => 1,  //show all posts
-			'tax_query' => array(
-				array(
-					'taxonomy' => 'tipo',
-					'field' => 'slug',
-					'terms' => $term->slug,
-				)
-			)
-
-		);
-		$loop = new WP_Query( $args );
-		$counter = 1;
-
-		if( $loop->have_posts() ):
-			while( $loop->have_posts() ) : $loop->the_post();	
-				$html .= '<div class="proyecto proyecto--tipo proyecto--' . $counter . '"><a href="' . get_term_link( $term ) . '"><div class="proyecto__img">' . get_the_post_thumbnail(null, 'project_thumb' ) . '</div><div class="proyecto__info"><h3 class="proyecto__titulo">' . $term->name . '</h3></div></a></div>';
-			endwhile;
-			$counter += 1;
-			wp_reset_postdata();
-			wp_reset_query();
-		endif;
-	endforeach;
-	$html .= '</div>';
-	return $html;
+	ob_start();
+	locate_template( 'includes/shortcode-clientes.php', true );
+  return ob_get_clean();
 }
 add_shortcode( 'tipos_clientes', 'tipos_de_clientes' );
 
 // Loop de taxonomía 'tipos de proyecto' para portafolio
 function tipos_de_proyecto() {
 	ob_start();
-	locate_template( 'includes/shortcode-tipos.php', true );
+	locate_template( 'includes/shortcode-proyectos-tipos.php', true );
   return ob_get_clean();
 }
 add_shortcode( 'tipos_proyectos', 'tipos_de_proyecto' );
 
 // Loop de proyectos para portafolio
 function proyectos_todos() {
-
-	global $paged;
-
-	$posts_per_page = 24;
-	$args = array(
-		'post_type' => 'proyecto',
-		'posts_per_page' => $posts_per_page,
-		'paged' => $paged,
-		'order' => 'DESC',
-		'orderby' => 'menu_order'
-	);
-
-	$loop = new WP_Query( $args );
-
-	$html = '<div class="proyectos">';
-
-	if( $loop->have_posts() ):
-	
-		while( $loop->have_posts() ) :
-			$loop->the_post();
-			$html .= '<div class="proyecto"><a href="' . get_the_permalink() . '"><div class="proyecto__img">' . get_the_post_thumbnail(null, 'project_thumb' ) . '</div><h3 class="proyecto__titulo">' . get_the_title() . '</h3><span class="proyecto__descripcion">' . get_field( 'descripcion', false) . '</span></a></div>';
-		endwhile;
-		$html .= '</div>';
-		$html .= wp_pagenavi( array( 'query' => $loop, 'echo' => false ) );
-		wp_reset_postdata();
-		wp_reset_query();
-	else:
-		$html .= 'No se encontraron tipos de proyectos.</div>';
-	endif;
-	return $html;
+	ob_start();
+	locate_template( 'includes/shortcode-proyectos-todos.php', true );
+  return ob_get_clean();
 }
 add_shortcode( 'proyectos', 'proyectos_todos' );
 
 // Loop de proyectos de taxonomía actual (archivo)
 function proyectos_current_tax() {
-
-	global $paged;
-	
-	$html = '<div class="proyectos">';
-
-	if ( have_posts() ) :
-		while ( have_posts() ) : the_post();
-		$html .= '<div class="proyecto"><a href="' . get_the_permalink() . '"><div class="proyecto__img">' . get_the_post_thumbnail(null, 'project_thumb' ) . '</div><h3 class="proyecto__titulo">' . get_the_title() . '</h3><span class="proyecto__descripcion">' . get_field( 'descripcion', false) . '</span></a></div>';
-		endwhile;
-		$html .= '</div>';
-		$html .= wp_pagenavi( array( 'echo' => false ) );
-		wp_reset_postdata();
-		wp_reset_query();
-	else:
-		$html = '<div>No se encontraron proyectos.</div>';
-	endif;
-	return $html;
+	ob_start();
+	locate_template( 'includes/shortcode-proyectos-archivo.php', true );
+  return ob_get_clean();
 }
 add_shortcode( 'proyecto_archivo', 'proyectos_current_tax' );
 
 // Loop proyectos por cada taxonomía (todas)
 function todos_proyectos_por_servicio() {
-	$html = '';
-	$taxonomies = get_object_taxonomies( 
-		array( 
-			'post_type' => 'proyecto'
-			)
-		);
- 
-	foreach( $taxonomies as $taxonomy ) :
-    	// Gets every "category" (term) in this taxonomy to get the respective posts
-    	$terms = get_terms( $taxonomy );
- 
-    	foreach( $terms as $term ) :
-        	$args = array(
-                'post_type' => $post_type,
-                'posts_per_page' => 4,  //show all posts
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => $taxonomy,
-                        'field' => 'slug',
-                        'terms' => $term->slug,
-                    )
-				),
-			'order' => 'DESC',
-			'orderby' => 'menu_order'
-            );
-        	$loop = new WP_Query( $args );
- 
-			if( $loop->have_posts() ):
-         		$html .= '<h2>' . $term->name . '</h2>';
-         
-				while( $loop->have_posts() ) :
-					$loop->the_post();
-					$html .= '<div class="proyecto"><a href="' . get_the_permalink() . '"><div class="proyecto__img">' . get_the_post_thumbnail(null, 'project_thumb' ) . '</div><h3 class="proyecto__titulo">' . get_the_title() . '</h3><span class="proyecto__descripcion">' . get_field( 'descripcion', false) . '</span></a></div>';
-				endwhile;
-				wp_reset_postdata();
-				wp_reset_query();
-			endif;
-		endforeach;
-	endforeach;
-	return $html;
+	ob_start();
+	locate_template( 'includes/shortcode-proyectos-servicios.php', true );
+  return ob_get_clean();
 }
 add_shortcode( 'proyecto_archive', 'todos_proyectos_por_servicio' );
 
