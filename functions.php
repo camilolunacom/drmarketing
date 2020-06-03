@@ -36,7 +36,7 @@ add_shortcode( 'proyectos_home', 'proyectos_para_home' );
 // Loop de taxonomía 'tipos de clientes' para portafolio
 function tipos_de_clientes() {
 	ob_start();
-	locate_template( 'includes/shortcode-clientes.php', true );
+	locate_template( 'includes/shortcode-proyectos-clientes.php', true );
   return ob_get_clean();
 }
 add_shortcode( 'tipos_clientes', 'tipos_de_clientes' );

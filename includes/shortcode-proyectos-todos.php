@@ -39,7 +39,7 @@ $loop = new WP_Query( $args );
 		<?php wp_reset_query(); ?>
 
 	<?php else: ?>
-		<p>No se encontraron tipos de proyectos.</p>
+		<p>No se encontraron proyectos.</p>
 	<?php endif; ?>
 
 </div><!-- .proyectos -->

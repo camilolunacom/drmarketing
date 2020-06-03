@@ -1,9 +1,9 @@
 <?php
 $terms = get_terms( array(
-  'taxonomy' => 'servicio',
+  'taxonomy' => 'tipo',
   'hide_empty' => false,
-  'meta_key' => 'tax_position',
-  'orderby' => 'tax_position'
+  'orderby' => 'count',
+  'order' => 'DSC',
 ) );
 ?>
   
