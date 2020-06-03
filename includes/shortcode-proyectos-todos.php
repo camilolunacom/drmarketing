@@ -13,9 +13,10 @@ $args = array(
 $loop = new WP_Query( $args );
 ?>
 
-<div class="proyectos">
+<?php if( $loop->have_posts() ): ?>
 
-  <?php if( $loop->have_posts() ): ?>
+  <div class="proyectos">
+
 		<?php while( $loop->have_posts() ) : $loop->the_post(); ?>
 
 			<div class="proyecto">
@@ -34,12 +35,12 @@ $loop = new WP_Query( $args );
 
 		<?php endwhile; ?>
 		
+  </div><!-- .proyectos -->
+
     <?php echo wp_pagenavi( array( 'query' => $loop, 'echo' => false ) ); ?>
 		<?php wp_reset_postdata(); ?>
 		<?php wp_reset_query(); ?>
 
-	<?php else: ?>
-		<p>No se encontraron proyectos.</p>
-	<?php endif; ?>
-
-</div><!-- .proyectos -->
+<?php else: ?>
+  <p>No se encontraron proyectos.</p>
+<?php endif; ?>
