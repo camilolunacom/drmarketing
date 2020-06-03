@@ -1,7 +1,7 @@
 /*======================================
 Theme Name: Alunizar
 Description: Child theme by Alunizar Studio.
-Version: 1.2
+Version: 1.1
 Author: Alunizar Studio
 Author URI: https://www.alunizarstudio.com/
 Template: Divi
@@ -209,7 +209,7 @@ h2 {
 .page-id-51 .project-selector__link:nth-of-type(3),
 .page-id-54 .project-selector__link:nth-of-type(2),
 .page-id-56 .project-selector__link:nth-of-type(1),
-.tax-tipo .project-selector__link:nth-of-type(1),
+.tax-tipo .project-selector__link:nth-of-type(3),
 .tax-servicio .project-selector__link:nth-of-type(2) {
 	border-top: 1px solid #ca9e67;
 	border-bottom: 1px solid #ca9e67;
@@ -219,7 +219,7 @@ h2 {
 .page-id-51 .project-selector__link:nth-of-type(3) a,
 .page-id-54 .project-selector__link:nth-of-type(2) a,
 .page-id-56 .project-selector__link:nth-of-type(1) a,
-.tax-tipo .project-selector__link:nth-of-type(1) a,
+.tax-tipo .project-selector__link:nth-of-type(3) a,
 .tax-servicio .project-selector__link:nth-of-type(2) a {
 	color: #ca9e67 !important;
 }
