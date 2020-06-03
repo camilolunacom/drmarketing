@@ -34,7 +34,7 @@ $loop = new WP_Query( $args );
 
 		<?php endwhile; ?>
 		
-    <?php wp_pagenavi( array( 'query' => $loop, 'echo' => false ) ); ?>
+    <?php echo wp_pagenavi( array( 'query' => $loop, 'echo' => false ) ); ?>
 		<?php wp_reset_postdata(); ?>
 		<?php wp_reset_query(); ?>
 
